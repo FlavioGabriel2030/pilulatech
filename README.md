@@ -1,15 +1,22 @@
 # 💊 PílulaTech — Pílulas do Conhecimento em Tecnologia
 
 ### 🔗 Acesse: **https://flaviogabriel2030.github.io/pilulatech/**
+### 🎬 Vídeo de demonstração: **[LINK DO VÍDEO]**
+<!-- Trocar [LINK DO VÍDEO] pelo endereço do vídeo (YouTube não listado ou Google Drive com acesso por link) -->
 
 Portal com **36 pílulas** curtas (3 a 7 minutos) sobre o universo da tecnologia, organizadas em **8 categorias**. Cada pílula traz uma visão geral, conceitos-chave, tecnologias fundamentais, uma curiosidade, a parte de carreira, **referências confiáveis** para se aprofundar, um quiz e artigos recentes da comunidade.
 
 > Projeto acadêmico desenvolvido em grupo, com apoio de IA (Vibe Coding), seguindo as heurísticas de Nielsen, princípios de UI/UX, affordances, hierarquia de cores e acessibilidade (WCAG 2.2 AA).
 
-<!-- Depois de publicar, salve uma captura da tela inicial em assets/images/screenshot-home.png e descomente a linha abaixo:
-![Tela inicial do PílulaTech](assets/images/screenshot-home.png) -->
+![Tela inicial do PílulaTech](assets/images/screenshot-home.png)
 
 ---
+
+## 🎬 Vídeo de demonstração
+
+Demonstração de cerca de 5 minutos com todas as funcionalidades: personalização, recomendações, busca e filtros, página da pílula com quiz, favoritos, histórico, progresso, glossário, temas e versão para celular.
+
+**Assista:** [LINK DO VÍDEO]
 
 ## ✨ Funcionalidades
 
