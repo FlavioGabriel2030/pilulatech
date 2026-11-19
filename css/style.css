@@ -679,6 +679,13 @@ a.cat-tag:hover { color: var(--text); text-decoration: underline; }
 @media (min-width: 768px) and (max-width: 1099px) {
   .main-nav .nav-secondary { display: none; }
 }
+/* Tablet em pé (768–959): menu e busca mais compactos para tudo caber em uma linha */
+@media (min-width: 768px) and (max-width: 959px) {
+  .header-inner { grid-template-columns: auto auto minmax(9rem, 1fr) auto; column-gap: var(--space-2); }
+  .main-nav a { padding-inline: var(--space-2); }
+  .search-kbd { display: none; }
+  .search-input { padding-right: var(--space-3); }
+}
 @media (max-width: 767px) {
   .search-kbd { display: none; }
 }
