@@ -1,0 +1,194 @@
+/* ==========================================================================
+   PílulaTech — Design Tokens
+   Fonte única de verdade para cores, tipografia, espaçamento, raios,
+   sombras e movimento. Nenhuma cor "solta" deve existir fora deste arquivo.
+
+   Regra 60-30-10:
+     60% neutro  → --bg
+     30% apoio   → --surface, --surface-2, --text-muted, --border
+     10% destaque→ --primary (CTAs, links, foco)
+   Contraste: todos os pares texto/fundo atendem WCAG 2.2 AA
+   (ver docs/avaliacao-heuristica.md para a tabela de razões).
+   ========================================================================== */
+
+:root {
+  /* ---------- Tipografia (escala modular 1.25) ---------- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  --fs-xs: 0.75rem;    /* 12px */
+  --fs-sm: 0.875rem;   /* 14px */
+  --fs-md: 1rem;       /* 16px — corpo */
+  --fs-lg: 1.25rem;    /* 20px */
+  --fs-xl: 1.5625rem;  /* 25px */
+  --fs-2xl: clamp(1.5625rem, 1.3rem + 1vw, 1.953rem);   /* 25 → 31px */
+  --fs-3xl: clamp(1.953rem, 1.5rem + 2vw, 2.441rem);    /* 31 → 39px */
+  --lh-body: 1.6;
+  --lh-tight: 1.2;
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ---------- Espaçamento (base 8pt; 4 para ajustes finos) ---------- */
+  --space-1: 0.25rem;  /* 4  */
+  --space-2: 0.5rem;   /* 8  */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+
+  /* ---------- Formas ---------- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-full: 999px;
+  --border-width: 1px;
+  --focus-width: 3px;
+
+  /* ---------- Layout ---------- */
+  --container: 75rem;      /* 1200px */
+  --measure: 68ch;         /* largura ideal de leitura */
+  --tap-target: 44px;      /* Lei de Fitts / WCAG 2.5.8 */
+  --header-h: 4rem;
+  --bottom-nav-h: 4rem;
+
+  /* ---------- Movimento ---------- */
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 250ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* ---------- Camadas ---------- */
+  --z-sticky: 50;
+  --z-header: 100;
+  --z-bottom-nav: 110;
+  --z-progress: 120;
+  --z-toast: 300;
+}
+
+/* ==========================================================================
+   Tema CLARO (padrão)
+   ========================================================================== */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Neutros (60/30) */
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --text: #0F172A;
+  --text-muted: #475569;
+  --border: #E2E8F0;
+  --border-strong: #64748B;   /* bordas de campos: >= 3:1 */
+
+  /* Destaque (10) */
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --on-primary: #FFFFFF;
+  --primary-soft: #EEF2FF;
+  --link: #4338CA;
+  --focus-ring: #4F46E5;
+
+  /* Semânticas */
+  --success: #15803D;
+  --success-soft: #DCFCE7;
+  --warning: #B45309;
+  --warning-soft: #FEF3C7;
+  --danger: #B91C1C;
+  --danger-hover: #991B1B;
+  --on-danger: #FFFFFF;
+  --danger-soft: #FEE2E2;
+  --info: #0369A1;
+  --info-soft: #E0F2FE;
+  --mark-bg: #FDE68A;
+  --mark-text: #0F172A;
+
+  /* Categorias (ícones, bordas e marcadores — nunca fundo de texto longo) */
+  --cat-infraestrutura: #2563EB;
+  --cat-nuvem: #0E7490;
+  --cat-sistemas: #475569;
+  --cat-seguranca: #DC2626;
+  --cat-dados-ia: #7C3AED;
+  --cat-desenvolvimento: #15803D;
+  --cat-devops: #C2410C;
+  --cat-tendencias: #BE185D;
+
+  /* Níveis (sempre acompanhados de texto + ícone) */
+  --level-iniciante: var(--success);
+  --level-intermediario: var(--warning);
+  --level-avancado: var(--danger);
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+  --shadow-md: 0 4px 12px rgb(15 23 42 / 0.08), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-lg: 0 12px 32px rgb(15 23 42 / 0.14);
+  --backdrop: rgb(15 23 42 / 0.55);
+
+  /* Toast (invertido para destacar do conteúdo) */
+  --toast-bg: #0F172A;
+  --toast-text: #F8FAFC;
+  --toast-action: #A5B4FC;
+}
+
+/* ==========================================================================
+   Tema ESCURO
+   ========================================================================== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0B1120;
+  --surface: #111827;
+  --surface-2: #1F2937;
+  --text: #E5E7EB;
+  --text-muted: #9CA3AF;
+  --border: #273244;
+  --border-strong: #6B7280;
+
+  --primary: #818CF8;
+  --primary-hover: #A5B4FC;
+  --on-primary: #0B1120;
+  --primary-soft: #1E1B4B;
+  --link: #A5B4FC;
+  --focus-ring: #A5B4FC;
+
+  --success: #86EFAC;
+  --success-soft: #052E16;
+  --warning: #FCD34D;
+  --warning-soft: #422006;
+  --danger: #FCA5A5;
+  --danger-hover: #FECACA;
+  --on-danger: #0B1120;
+  --danger-soft: #450A0A;
+  --info: #7DD3FC;
+  --info-soft: #082F49;
+  --mark-bg: #FDE68A;
+  --mark-text: #0B1120;
+
+  --cat-infraestrutura: #60A5FA;
+  --cat-nuvem: #22D3EE;
+  --cat-sistemas: #94A3B8;
+  --cat-seguranca: #F87171;
+  --cat-dados-ia: #A78BFA;
+  --cat-desenvolvimento: #4ADE80;
+  --cat-devops: #FB923C;
+  --cat-tendencias: #F472B6;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.6);
+  --backdrop: rgb(0 0 0 / 0.7);
+
+  --toast-bg: #E5E7EB;
+  --toast-text: #0B1120;
+  --toast-action: #3730A3;
+}
+
+/* ==========================================================================
+   Escala de fonte (controle A− / A / A+)
+   ========================================================================== */
+html[data-font="sm"] { font-size: 93.75%; }
+html[data-font="md"] { font-size: 100%; }
+html[data-font="lg"] { font-size: 112.5%; }
+html[data-font="xl"] { font-size: 125%; }

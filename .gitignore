@@ -1,0 +1,12 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Backups exportados pelo próprio app (podem ter dados pessoais de estudo)
+pilulatech-backup-*.json
