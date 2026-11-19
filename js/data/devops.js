@@ -161,7 +161,7 @@ export default [
       { titulo: 'Monitoring Distributed Systems (Google SRE Book)', fonte: 'Google', tipo: 'livro', idioma: 'en', url: 'https://sre.google/sre-book/monitoring-distributed-systems/' },
       { titulo: 'Documentação do OpenTelemetry', fonte: 'CNCF', tipo: 'documentacao', idioma: 'pt', url: 'https://opentelemetry.io/pt/docs/' },
       { titulo: 'Visão geral do Prometheus', fonte: 'Prometheus', tipo: 'documentacao', idioma: 'en', url: 'https://prometheus.io/docs/introduction/overview/' },
-      { titulo: 'O que é observabilidade?', fonte: 'AWS', tipo: 'artigo', idioma: 'pt', url: 'https://aws.amazon.com/pt/what-is/observability/' }
+      { titulo: 'Qual é a diferença entre monitoramento e observabilidade?', fonte: 'AWS', tipo: 'artigo', idioma: 'pt', url: 'https://aws.amazon.com/pt/compare/the-difference-between-monitoring-and-observability/' }
     ],
     relacionados: ['devops', 'kubernetes', 'ci-cd'],
     tags: ['monitoramento', 'observabilidade', 'logs', 'métricas', 'traces', 'prometheus', 'grafana', 'sre', 'slo'],

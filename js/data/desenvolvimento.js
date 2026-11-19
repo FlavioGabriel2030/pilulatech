@@ -204,7 +204,7 @@ export default [
     referencias: [
       { titulo: 'MDN — Aprendendo desenvolvimento web', fonte: 'MDN Web Docs', tipo: 'curso', idioma: 'pt', url: 'https://developer.mozilla.org/pt-BR/docs/Learn' },
       { titulo: 'web.dev — Learn', fonte: 'Google', tipo: 'curso', idioma: 'en', url: 'https://web.dev/learn' },
-      { titulo: 'JavaScript.info em português', fonte: 'javascript.info', tipo: 'livro', idioma: 'pt', url: 'https://pt.javascript.info/' },
+      { titulo: 'The Modern JavaScript Tutorial', fonte: 'javascript.info', tipo: 'livro', idioma: 'en', url: 'https://javascript.info/' },
       { titulo: 'CSS-Tricks — guia completo de Flexbox', fonte: 'CSS-Tricks', tipo: 'artigo', idioma: 'en', url: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/' }
     ],
     relacionados: ['ux-ihc', 'apis-rest', 'testes'],
@@ -247,7 +247,7 @@ export default [
       { titulo: 'The Practical Test Pyramid', fonte: 'martinfowler.com (Ham Vocke)', tipo: 'artigo', idioma: 'en', url: 'https://martinfowler.com/articles/practical-test-pyramid.html' },
       { titulo: 'Documentação do Playwright', fonte: 'Microsoft', tipo: 'documentacao', idioma: 'en', url: 'https://playwright.dev/docs/intro' },
       { titulo: 'ISTQB — certificações em testes', fonte: 'ISTQB', tipo: 'curso', idioma: 'en', url: 'https://www.istqb.org/' },
-      { titulo: 'Testes automatizados no MDN', fonte: 'MDN Web Docs', tipo: 'documentacao', idioma: 'pt', url: 'https://developer.mozilla.org/pt-BR/docs/Learn/Tools_and_testing/Cross_browser_testing/Automated_testing' }
+      { titulo: 'Introduction to automated testing', fonte: 'MDN Web Docs', tipo: 'documentacao', idioma: 'en', url: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Testing/Automated_testing' }
     ],
     relacionados: ['ci-cd', 'desenvolvimento-software', 'owasp'],
     tags: ['teste', 'qa', 'tdd', 'unitário', 'e2e', 'jest', 'playwright', 'qualidade'],
@@ -281,7 +281,7 @@ export default [
     tecnologiasFundamentais: [
       { nome: 'VisuAlgo', descricao: 'Visualizações animadas de estruturas e algoritmos.', url: 'https://visualgo.net/' },
       { nome: 'LeetCode', descricao: 'Plataforma de exercícios usados em entrevistas técnicas.', url: 'https://leetcode.com/' },
-      { nome: 'Beecrowd', descricao: 'Juiz online brasileiro de problemas de programação.', url: 'https://www.beecrowd.com.br/' }
+      { nome: 'Beecrowd', descricao: 'Juiz online brasileiro de problemas de programação.', url: 'https://judge.beecrowd.com/' }
     ],
     curiosidade: 'O algoritmo de Dijkstra, que encontra o caminho mais curto em um grafo e está por trás de apps de rotas, foi criado em cerca de 20 minutos, segundo o próprio autor, enquanto ele tomava café com a noiva, em 1956.',
     carreira: 'Base para qualquer engenheiro(a) de software; muito cobrada em entrevistas técnicas e maratonas de programação, como a Maratona SBC.',
