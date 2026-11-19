@@ -64,7 +64,8 @@ code { font-family: var(--font-mono); font-size: 0.9em; background: var(--surfac
 .container { width: min(100% - 2 * var(--space-4), var(--container)); margin-inline: auto; }
 .muted { color: var(--text-muted); }
 .stack > * + * { margin-top: var(--space-4); }
-.icon { width: 1.25em; height: 1.25em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* inline-block: o reset deixa todo svg como bloco, o que quebrava a linha de ícones dentro de textos */
+.icon { display: inline-block; vertical-align: -0.2em; width: 1.25em; height: 1.25em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .icon--sm { width: 1em; height: 1em; }
 .icon--lg { width: 1.75em; height: 1.75em; }
 .icon--fill { fill: currentColor; }
@@ -350,7 +351,8 @@ a.cat-tag:hover { color: var(--text); text-decoration: underline; }
 @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 
 /* 7. LISTA DE TÓPICOS ----------------------------------------------------- */
-.list-layout { display: grid; gap: var(--space-5); }
+/* minmax(0, 1fr): sem isso a largura mínima do seletor de ordenação alargava a coluna no celular */
+.list-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
 .filters-toggle { justify-self: start; }
 .filters {
   display: grid; gap: var(--space-5); align-content: start;
@@ -364,7 +366,8 @@ a.cat-tag:hover { color: var(--text); text-decoration: underline; }
 .results-count { font-weight: var(--fw-semibold); }
 .active-filters { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); font-size: var(--fs-sm); }
 .active-filters:empty { display: none; }
-.sort-field { display: flex; align-items: center; gap: var(--space-2); }
+.sort-field { display: flex; align-items: center; gap: var(--space-2); min-width: 0; max-width: 100%; }
+.sort-field .select { min-width: 0; max-width: 100%; }
 .sort-field .field-label { white-space: nowrap; }
 
 /* 8. PÁGINA DA PÍLULA ----------------------------------------------------- */
@@ -555,6 +558,8 @@ a.cat-tag:hover { color: var(--text); text-decoration: underline; }
 
 .steps-indicator { display: grid; gap: var(--space-2); margin-bottom: var(--space-4); }
 .steps-indicator p { font-size: var(--fs-sm); color: var(--text-muted); font-weight: var(--fw-semibold); }
+/* Recebe foco só para o leitor de tela anunciar o passo; não é interativo, então sem contorno */
+.steps-indicator p:focus { outline: none; }
 .option-fieldset { border: 0; padding: 0; min-width: 0; }
 .option-fieldset + .option-fieldset { margin-top: var(--space-5); }
 .option-fieldset legend { font-weight: var(--fw-bold); margin-bottom: var(--space-1); padding: 0; }
@@ -692,7 +697,7 @@ a.cat-tag:hover { color: var(--text); text-decoration: underline; }
 
 @media (min-width: 1024px) {
   .card-grid { grid-template-columns: repeat(3, 1fr); }
-  .list-layout { grid-template-columns: 16rem 1fr; align-items: start; }
+  .list-layout { grid-template-columns: 16rem minmax(0, 1fr); align-items: start; }
   .filters, .filters.is-collapsed { display: grid; position: sticky; top: calc(var(--header-h) + var(--space-4)); }
   .filters-toggle { display: none; }
   .topic-layout { grid-template-columns: minmax(0, 1fr) 15rem; }
