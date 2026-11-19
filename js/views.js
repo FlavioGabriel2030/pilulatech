@@ -42,6 +42,7 @@ function recommendationsHtml() {
     history: store.getHistory()
   }, { exclude: shownRecs });
   recs.forEach((r) => shownRecs.add(r.topic.id));
+  store.addRecHistory(recs.map((r) => r.topic.id)); // RF05: guarda as sugestões exibidas
   return recs.map((r) => card(r.topic, { reasons: r.reasons })).join('');
 }
 
@@ -232,7 +233,8 @@ function updateResults(view) {
   const grid = $('#results', view);
   if (n) {
     grid.className = 'card-grid';
-    grid.innerHTML = results.map((t) => card(t, { query: filters.q })).join('');
+    // h2: os cards vêm logo depois do h1 da página (hierarquia de títulos sem saltos)
+    grid.innerHTML = results.map((t) => card(t, { query: filters.q, headingLevel: 2 })).join('');
   } else {
     grid.className = '';
     const suggestions = ['redes', 'nuvem', 'ciberseguranca', 'machine-learning'].map(getTopic);
@@ -677,19 +679,28 @@ export function renderHistory(view) {
     groups.get(g).push(h);
   });
   const completed = store.getProgress().completed;
+  // Conjuntos de sugestões recebidas, ignorando pílulas que não existam mais
+  const recBatches = store.getRecHistory()
+    .map((b) => ({ ...b, topics: b.ids.map(getTopic).filter(Boolean) }))
+    .filter((b) => b.topics.length);
+  const hasAny = items.length || recBatches.length;
 
   view.innerHTML = `
     <header class="page-header">
       <div class="section-header">
         <div>
           <h1 class="page-title">Histórico</h1>
-          <p class="page-lead">${items.length ? `${plural(items.length, 'pílula aberta', 'pílulas abertas')} recentemente. ` : ''}Guardamos as últimas 20, só neste navegador.</p>
+          <p class="page-lead">As pílulas que você abriu e as sugestões que recebeu, guardadas só neste navegador.</p>
         </div>
-        ${items.length ? `<button type="button" class="btn btn--danger-outline" id="btn-clear-history">${icon('trash')} Limpar histórico</button>` : ''}
+        ${hasAny ? `<button type="button" class="btn btn--danger-outline" id="btn-clear-history">${icon('trash')} Limpar histórico</button>` : ''}
       </div>
     </header>
+
+    <section aria-labelledby="hist-opened">
+      <h2 class="section-title" id="hist-opened">Pílulas abertas</h2>
+      <p class="section-sub">${items.length ? `${plural(items.length, 'pílula aberta', 'pílulas abertas')} recentemente. ` : ''}Guardamos as últimas 20.</p>
     ${items.length ? [...groups].map(([g, list]) => `
-      <h2 class="history-group-title">${g}</h2>
+      <h3 class="history-group-title">${g}</h3>
       <ul class="history-list">
         ${list.map((h) => {
           const t = getTopic(h.id);
@@ -705,25 +716,55 @@ export function renderHistory(view) {
           </li>`;
         }).join('')}
       </ul>`).join('')
-    : emptyState({
+    : `<p class="muted" style="margin-top:var(--space-4)">Você ainda não abriu nenhuma pílula. <a href="#/topicos">Ver todas as pílulas</a></p>`}
+    </section>
+
+    <section class="section" aria-labelledby="hist-recs">
+      <h2 class="section-title" id="hist-recs">Sugestões que você recebeu</h2>
+      <p class="section-sub">Cada linha é um conjunto de “Pílulas para você” exibido na página inicial. Guardamos os últimos 10.</p>
+      ${recBatches.length ? `
+      <ul class="history-list" style="margin-top:var(--space-4)">
+        ${recBatches.map((b) => `
+          <li class="history-item history-item--recs">
+            ${icon('sparkles')}
+            <div>
+              <small>Sugeridas ${relativeTime(b.at)}</small>
+              <ul class="chip-list" style="list-style:none;padding:0;margin-top:var(--space-1)">
+                ${b.topics.map((t) => `<li><a class="chip" href="#/topico/${t.id}">${completed[t.id] ? `${icon('check', 'icon--sm')}<span class="visually-hidden">Concluída: </span>` : ''}${esc(t.titulo)}</a></li>`).join('')}
+              </ul>
+            </div>
+          </li>`).join('')}
+      </ul>`
+      : `<p class="muted" style="margin-top:var(--space-4)">As sugestões aparecem aqui depois que você visita a <a href="#/inicio">página inicial</a>.</p>`}
+    </section>`;
+
+  if (!hasAny) {
+    view.innerHTML = `
+      <header class="page-header"><h1 class="page-title">Histórico</h1></header>
+      ${emptyState({
         icon: 'history',
         title: 'Seu histórico está vazio',
-        text: 'Quando você abrir uma pílula, ela aparece aqui para você voltar rapidamente.',
+        text: 'Quando você abrir uma pílula ou receber sugestões na página inicial, elas aparecem aqui para você voltar rapidamente.',
         actionsHtml: '<a class="btn btn--primary" href="#/topicos">Ver todas as pílulas</a>'
       })}`;
+  }
 
   $('#btn-clear-history', view)?.addEventListener('click', async () => {
     const ok = await confirmDialog({
       title: 'Limpar todo o histórico?',
-      message: `Isso remove ${plural(items.length, 'item', 'itens')} do histórico. Seus favoritos e seu progresso não serão afetados.`,
+      message: `Isso remove ${plural(items.length, 'pílula aberta', 'pílulas abertas')} e ${plural(recBatches.length, 'conjunto de sugestões', 'conjuntos de sugestões')}. Seus favoritos e seu progresso não serão afetados.`,
       confirmLabel: 'Limpar histórico',
       danger: true
     });
     if (!ok) return;
     const backup = store.getHistory();
+    const recBackup = store.getRecHistory();
     store.clearHistory();
+    store.setRecHistory([]);
     hooks.rerender();
-    toast('Histórico limpo.', { action: { label: 'Desfazer', onClick: () => { store.setHistory(backup); hooks.rerender(); } } });
+    toast('Histórico limpo.', {
+      action: { label: 'Desfazer', onClick: () => { store.setHistory(backup); store.setRecHistory(recBackup); hooks.rerender(); } }
+    });
   });
 
   view.querySelectorAll('[data-remove-history]').forEach((b) => b.addEventListener('click', () => {

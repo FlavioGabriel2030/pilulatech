@@ -138,6 +138,25 @@ export const clearHistory = () => write('history', []);
 export const setHistory = (list) => write('history', list);
 
 /* ------------------------------------------------------------------------ */
+/* Histórico de recomendações (RF05 — "últimas sugestões visualizadas")      */
+/* ------------------------------------------------------------------------ */
+
+const REC_HISTORY_LIMIT = 10;
+
+/** @returns {{ids:string[], at:number}[]} conjuntos de sugestões, mais recentes primeiro */
+export const getRecHistory = () => read('recHistory', []);
+
+/** Registra um conjunto de sugestões exibido (ignora se for igual ao último). */
+export function addRecHistory(ids) {
+  const list = getRecHistory();
+  if (list[0] && list[0].ids.join() === ids.join()) return;
+  list.unshift({ ids, at: Date.now() });
+  write('recHistory', list.slice(0, REC_HISTORY_LIMIT));
+}
+
+export const setRecHistory = (list) => write('recHistory', list);
+
+/* ------------------------------------------------------------------------ */
 /* Progresso e gamificação (RF11 / RF12)                                     */
 /* ------------------------------------------------------------------------ */
 
@@ -195,7 +214,7 @@ export function addRecentSearch(term) {
 /* Exportar / importar (backup do progresso em JSON)                         */
 /* ------------------------------------------------------------------------ */
 
-const EXPORT_KEYS = ['prefs', 'favorites', 'history', 'progress', 'theme', 'fontScale', 'onboardingDone'];
+const EXPORT_KEYS = ['prefs', 'favorites', 'history', 'recHistory', 'progress', 'theme', 'fontScale', 'onboardingDone'];
 
 /** Gera um objeto com todos os dados do usuário. */
 export function exportData() {
@@ -220,6 +239,9 @@ export function importData(data) {
   }
   if (data.history != null && !Array.isArray(data.history)) {
     throw new Error('O histórico do backup está corrompido.');
+  }
+  if (data.recHistory != null && !Array.isArray(data.recHistory)) {
+    throw new Error('O histórico de recomendações do backup está corrompido.');
   }
   if (data.progress != null && typeof data.progress !== 'object') {
     throw new Error('O progresso do backup está corrompido.');
